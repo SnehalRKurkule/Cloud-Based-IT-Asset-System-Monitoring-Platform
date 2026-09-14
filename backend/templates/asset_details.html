@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
+
+    <title>Asset Details</title>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <style>
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: #f4f6f9;
+            color: #172033;
+        }
+
+        .header {
+            background: #111827;
+            color: white;
+            padding: 25px 40px;
+        }
+
+        .header h1 {
+            margin: 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: 30px auto;
+        }
+
+        .back {
+            display: inline-block;
+            margin-bottom: 20px;
+            text-decoration: none;
+            color: #2563eb;
+        }
+
+        .asset-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .asset-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .info-box {
+            padding: 15px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .label {
+            font-size: 14px;
+            color: #64748b;
+        }
+
+        .value {
+            font-size: 20px;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        .chart-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            margin-bottom: 25px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        canvas {
+            max-height: 350px;
+        }
+
+        @media(max-width: 800px) {
+
+            .asset-grid {
+                grid-template-columns: 1fr;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body data-asset-id="{{ asset_id }}">
+
+    <div class="header">
+        <h1>Asset Details</h1>
+        <p>IT Asset & System Monitoring</p>
+    </div>
+
+    <div class="container">
+
+    <a href="/" class="back">
+        ← Back to Dashboard
+    </a>
+
+
+    <!-- Asset Information -->
+
+    <div class="asset-card">
+
+        <h2 id="hostname">
+            Loading...
+        </h2>
+
+        <div class="asset-grid">
+
+            <div class="info-box">
+
+                <div class="label">
+                    IP Address
+                </div>
+
+                <div class="value" id="ip">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Operating System
+                </div>
+
+                <div class="value" id="os">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Status
+                </div>
+
+                <div class="value" id="status">
+                    -
+                </div>
+
+            </div>
+
+
+            <div class="info-box">
+
+                <div class="label">
+                    Last Seen
+                </div>
+
+                <div class="value" id="lastSeen">
+                    -
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- CPU -->
+
+    <div class="chart-card">
+
+        <h2>CPU Usage</h2>
+
+        <canvas id="cpuChart"></canvas>
+
+    </div>
+
+
+    <!-- Memory -->
+
+    <div class="chart-card">
+
+        <h2>Memory Usage</h2>
+
+        <canvas id="memoryChart"></canvas>
+
+    </div>
+
+
+    <!-- Disk -->
+
+    <div class="chart-card">
+
+        <h2>Disk Usage</h2>
+
+        <canvas id="diskChart"></canvas>
+
+    </div>
+
+</div>
+
+
+<script>
+
+        const assetId = document.body.dataset.assetId;
+
+        let cpuChart;
+        let memoryChart;
+        let diskChart;
+
+
+        async function loadAsset() {
+
+            const response =
+                await fetch(`/api/assets/${assetId}`);
+
+            if (!response.ok) {
+
+                document.getElementById("hostname")
+                    .innerText = "Asset not found";
+
+                return;
+            }
+
+            const asset = await response.json();
+
+            document.getElementById("hostname")
+                .innerText = asset.hostname;
+
+            document.getElementById("ip")
+                .innerText = asset.ip_address;
+
+            document.getElementById("os")
+                .innerText = asset.os;
+
+            document.getElementById("status")
+                .innerText = asset.status;
+
+            document.getElementById("lastSeen")
+                .innerText = asset.updated_at || "-";
+        }
+
+
+        async function loadMetrics() {
+
+            const response =
+                await fetch(`/api/assets/${assetId}/metrics`);
+
+            if (!response.ok) {
+
+                console.error("Failed to load metrics");
+
+                return;
+            }
+
+            const metrics = await response.json();
+
+            createCharts(metrics);
+        }
+
+
+function createCharts(metrics) {
+
+    const labels =
+        metrics.map(m => formatTime(m.timestamp));
+
+    const cpu =
+        metrics.map(m => m.cpu_usage);
+
+    const memory =
+        metrics.map(m => m.memory_usage);
+
+    const disk =
+        metrics.map(m => m.disk_usage);
+
+
+    cpuChart = createChart(
+        "cpuChart",
+        "CPU %",
+        labels,
+        cpu
+    );
+
+
+    memoryChart = createChart(
+        "memoryChart",
+        "Memory %",
+        labels,
+        memory
+    );
+
+
+    diskChart = createChart(
+        "diskChart",
+        "Disk %",
+        labels,
+        disk
+    );
+}
+
+
+function createChart(
+    canvasId,
+    label,
+    labels,
+    data
+) {
+
+    return new Chart(
+        document.getElementById(canvasId),
+        {
+
+            type: "line",
+
+            data: {
+
+                labels: labels,
+
+                datasets: [
+
+                    {
+                        label: label,
+                        data: data,
+                        tension: 0.3,
+                        fill: false
+                    }
+
+                ]
+
+            },
+
+            options: {
+
+                responsive: true,
+
+                scales: {
+
+                    y: {
+
+                        beginAtZero: true,
+
+                        max: 100
+
+                    }
+
+                }
+
+            }
+
+        }
+    );
+}
+
+
+function formatTime(timestamp) {
+
+    const date = new Date(timestamp);
+
+    return date.toLocaleTimeString();
+
+}
+
+
+loadAsset();
+loadMetrics();
+
+</script>
+
+</body>
+
+</html>

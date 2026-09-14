@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IT Asset & System Monitoring</title>
+    <link rel="stylesheet" href="/static/style.css">
+</head>
+<body>
+<header>
+    <h1>IT Asset & System Monitoring</h1>
+    <p>Linux server monitoring dashboard</p>
+</header>
+
+<main>
+    <!-- <div class="asset-controls">
+
+    <input
+        type="text"
+        id="assetSearch"
+        placeholder="Search hostname or IP..."
+    >
+
+    <select id="statusFilter">
+
+        <option value="ALL">All Status</option>
+        <option value="HEALTHY">Healthy</option>
+        <option value="WARNING">Warning</option>
+        <option value="CRITICAL">Critical</option>
+        <option value="OFFLINE">Offline</option>
+
+    </select>
+
+</div> -->
+    <section class="cards">
+        <div class="card"><span>Total Assets</span><strong id="total">0</strong></div>
+        <div class="card"><span>Healthy</span><strong id="healthy">0</strong></div>
+        <div class="card"><span>Warning</span><strong id="warning">0</strong></div>
+        <div class="card"><span>Critical</span><strong id="critical">0</strong></div>
+    </section>
+
+    <section class="panel">
+        <h2>Assets</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hostname</th>
+                    <th>IP Address</th>
+                    <th>OS</th>
+                    <th>CPU</th>
+                    <th>Memory</th>
+                    <th>Disk</th>
+                    <th>Status</th>
+                    <th>Last Seen</th>
+                </tr>
+            </thead>
+            <tbody id="assetTable"></tbody>
+        </table>
+    </section>
+
+    <section class="panel">
+        <h2>Recent Alerts</h2>
+        <table>
+            <thead><tr>
+                <th>Server</th><th>Metric</th><th>Value</th>
+                <th>Threshold</th><th>Severity</th><th>Status</th>
+            </tr></thead>
+            <tbody id="alertTable"></tbody>
+        </table>
+    </section>
+</main>
+<script src="/static/app.js"></script>
+</body>
+</html>
