@@ -62,7 +62,7 @@ AWS VPC
 
 ### Application Dashboard
 
-![Monitoring Dashboard](Screenshots/dashboard.png)
+![Monitoring Dashboard](Screenshots/dashboard)
 
 ### AWS EC2 Deployment
 
