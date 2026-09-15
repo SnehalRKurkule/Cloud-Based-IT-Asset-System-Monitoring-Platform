@@ -21,6 +21,45 @@ Python, Flask, MySQL, psutil, REST API, HTML/CSS/JavaScript
    `python agent/monitoring_agent.py`
 6. Open `http://127.0.0.1:5000`
 
+## AWS Deployment
+
+The application is deployed on Amazon Web Services using a custom VPC.
+
+### AWS Architecture
+
+- **Amazon VPC** – Provides isolated network infrastructure
+- **EC2** – Hosts the Flask application
+- **Amazon RDS (MySQL)** – Provides managed database storage
+- **Security Groups** – Controls inbound and outbound network access
+- **EBS** – Provides persistent storage for the EC2 instance
+- **EBS Snapshot** – Used as a backup/recovery point for the EC2 root volume
+
+### Deployment Flow
+
+Monitoring Agent
+       ↓
+Flask REST API
+       ↓
+Amazon EC2
+       ↓
+Amazon RDS (MySQL)
+       ↓
+Web Dashboard
+
+### Network Architecture
+
+Internet
+   │
+   ▼
+AWS VPC
+   │
+   ├── Public Subnet
+   │      └── EC2
+   │           └── Flask Application
+   │
+   └── Database Layer
+          └── RDS MySQL
+
 ## Thresholds
 
 CPU: warning 70%, critical 85%
