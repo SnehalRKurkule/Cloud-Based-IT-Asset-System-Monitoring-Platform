@@ -60,6 +60,18 @@ AWS VPC
    └── Database Layer
           └── RDS MySQL
 
+### Application Dashboard
+
+![Monitoring Dashboard](screenshots/dashboard.png)
+
+### AWS EC2 Deployment
+
+![EC2 Deployment](screenshots/ec2.png)
+
+### Amazon RDS
+
+![RDS Database](screenshots/rds.png)
+
 ## Thresholds
 
 CPU: warning 70%, critical 85%
