@@ -1,5 +1,9 @@
 # Cloud-Based IT Asset & System Monitoring Platform
 
+Cloud-Based IT Asset & System Monitoring Platform centrally monitors multiple servers by using a lightweight Python monitoring agent that collects CPU, memory and disk utilization and sends the data to Flask REST APIs. The backend stores the metrics in MySQL, processes threshold-based alerts, and provides a dashboard to view asset health and historical metrics.
+
+For the cloud deployment, I deployed the Flask application on AWS EC2 within a custom VPC, configured subnets, route tables, an Internet Gateway and Security Groups for network access. I use Amazon RDS for the MySQL database, Amazon S3 for storing reports/logs, and CloudWatch for monitoring the AWS infrastructure. The application follows a client-server architecture where monitoring agents send system metrics to the backend, the backend stores and analyzes the data, and the dashboard provides centralized visibility of all monitored assets.
+
 ## MVP Architecture
 
 Linux Monitoring Agent -> Flask REST API -> MySQL -> Web Dashboard
