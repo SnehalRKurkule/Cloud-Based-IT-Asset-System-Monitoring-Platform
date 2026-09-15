@@ -70,7 +70,7 @@ AWS VPC
 
 ### Amazon RDS
 
-![RDS Database](Screenshots/AWS RDS.png)
+![RDS Database](Screenshots/AWS%20RDS.png)
 
 ## Thresholds
 
