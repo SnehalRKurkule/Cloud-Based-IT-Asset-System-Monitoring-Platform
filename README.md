@@ -62,15 +62,15 @@ AWS VPC
 
 ### Application Dashboard
 
-![Monitoring Dashboard](screenshots/dashboard.png)
+![Monitoring Dashboard](Screenshots/dashboard.png)
 
 ### AWS EC2 Deployment
 
-![EC2 Deployment](screenshots/ec2.png)
+![EC2 Deployment](Screenshots/AWS EC2.png)
 
 ### Amazon RDS
 
-![RDS Database](screenshots/rds.png)
+![RDS Database](Screenshots/AWS RDS.png)
 
 ## Thresholds
 
