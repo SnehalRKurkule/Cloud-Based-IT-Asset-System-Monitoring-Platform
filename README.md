@@ -66,7 +66,7 @@ AWS VPC
 
 ### AWS EC2 Deployment
 
-![EC2 Deployment](Screenshots/AWS EC2.png)
+![EC2 Deployment](Screenshots/AWS%20EC2.png)
 
 ### Amazon RDS
 
