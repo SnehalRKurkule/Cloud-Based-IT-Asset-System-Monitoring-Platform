@@ -64,6 +64,9 @@ AWS VPC
    └── Database Layer
           └── RDS MySQL
 
+          
+<img width="345" height="741" alt="image" src="https://github.com/user-attachments/assets/7469ff44-5413-41da-9937-c37dd33dc37c" />
+
 ### Application Dashboard
 
 ![Monitoring Dashboard](Screenshots/IT%20Monitoring%20.png)
