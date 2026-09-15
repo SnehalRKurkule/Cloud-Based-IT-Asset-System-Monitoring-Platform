@@ -64,7 +64,16 @@ AWS VPC
 
 ![Monitoring Dashboard](Screenshots/IT%20Monitoring%20.png)
 
-![Asset Details](Screenshots/IT%20Monitoring%20.png)
+![Asset Details](Screenshots/It%20Monitoring%20Asset%20Detail.png)
+
+![Memory usage Graph](Screenshots/Memory%20usage.png) 
+
+![CPU Usage Graph](Screenshots/CPU%20usage.png)
+
+![Disk Usage Graph](Screenshots/disk%20usage.png)
+
+
+
 
 
 ### AWS EC2 Deployment
